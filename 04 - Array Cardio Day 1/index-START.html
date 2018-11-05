@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Array Cardio 💪</title>
 </head>
+
 <body>
   <p><em>Psst: have a look at the JavaScript Console</em> 💁</p>
   <script>
@@ -27,33 +29,162 @@
       { first: 'Hanna', last: 'Hammarström', year: 1829, passed: 1909 }
     ];
 
-    const people = ['Beck, Glenn', 'Becker, Carl', 'Beckett, Samuel', 'Beddoes, Mick', 'Beecher, Henry', 'Beethoven, Ludwig', 'Begin, Menachem', 'Belloc, Hilaire', 'Bellow, Saul', 'Benchley, Robert', 'Benenson, Peter', 'Ben-Gurion, David', 'Benjamin, Walter', 'Benn, Tony', 'Bennington, Chester', 'Benson, Leana', 'Bent, Silas', 'Bentsen, Lloyd', 'Berger, Ric', 'Bergman, Ingmar', 'Berio, Luciano', 'Berle, Milton', 'Berlin, Irving', 'Berne, Eric', 'Bernhard, Sandra', 'Berra, Yogi', 'Berry, Halle', 'Berry, Wendell', 'Bethea, Erin', 'Bevan, Aneurin', 'Bevel, Ken', 'Biden, Joseph', 'Bierce, Ambrose', 'Biko, Steve', 'Billings, Josh', 'Biondo, Frank', 'Birrell, Augustine', 'Black, Elk', 'Blair, Robert', 'Blair, Tony', 'Blake, William'];
+    
 
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
 
+    const bornIn1500s = inventors.filter(e => {
+      return e.year >= 1500 && e.year < 1600;
+    })
+    console.table(bornIn1500s)
+
+
     // Array.prototype.map()
     // 2. Give us an array of the inventors' first and last names
+
+    const firstAndLast = inventors.map(e => {
+
+      const first = e.first;
+      const last = e.last;
+
+      return [first, last]
+    })
+
+    console.log(firstAndLast)
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
 
+  /*   const birth = inventors.sort((a, b) => {
+      return  b.year - a.year
+    }); */
+
+    const birthProper = inventors.sort((a,b)=> a.year > b.year? 1: -1)
+
+ /*    console.table(birth) */
+    console.table(birthProper)
+
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live?
 
+   /*  const lived = inventors.reduce((total, b) => {
+      return total + (b.passed - b.year)
+    },0) */
+
+    const lived = inventors.reduce((total, inventor) => {
+      return total + (inventor.passed - inventor.year);
+    }, 0);
+
+    console.log("żyli w sumie: " + lived)
+
     // 5. Sort the inventors by years lived
 
+    const yearsLived = inventors.map(e => {
+
+
+      return e.passed - e.year
+    }
+    )
+
+    console.log(yearsLived)
+
+    const yearsLivedOrder = inventors.sort((a, b) => {
+      const aLived = a.passed - a.year;
+      const bLived = b.passed - b.year;
+
+   /*    if ((a.passed - a.year) > (b.passed - b.year) ){
+        return 1
+      } else {return -1} */
+
+    return aLived > bLived ? -1 : 1;
+    })
+
+   
+
+    console.table(yearsLivedOrder)
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
 
 
+    const boulevards = ["Boulevards of Paris", "City walls of Paris", "Thiers wall", "Wall of Charles V", "Wall of Philip II Augustus", "City gates of Paris",
+      "Haussmann's renovation of Paris", "Boulevards of the Marshals", "Boulevard Auguste-Blanqui", "Boulevard Barbès", "Boulevard Beaumarchais",
+      "Boulevard de l'Amiral-Bruix", "Boulevard des Capucines", "Boulevard de la Chapelle", "Boulevard de Clichy", "Boulevard du Crime",
+      "Boulevard Haussmann", "Boulevard de l'Hôpital", "Boulevard des Italiens", "Boulevard de la Madeleine", "Boulevard de Magenta",
+      "Boulevard Montmartre", "Boulevard du Montparnasse", "Boulevard Raspail", "Boulevard Richard-Lenoir", "Boulevard de Rochechouart",
+      "Boulevard Saint-Germain", "Boulevard Saint-Michel", "Boulevard de Sébastopol", "Boulevard de Strasbourg", "Boulevard du Temple",
+      "Boulevard Voltaire", "Boulevard de la Zone"]
+
+    console.log(boulevards)
+
+    const de = boulevards.filter(e => {
+      return e.includes("de")
+    })
+
+    console.log(de)
+
     // 7. sort Exercise
     // Sort the people alphabetically by last name
 
-    // 8. Reduce Exercise
+    const people = ['Beck, Glenn', 'Becker, Carl', 'Beckett, Samuel', 'Beddoes, Mick', 'Beecher, Henry', 'Beethoven, Ludwig', 'Begin, Menachem', 'Belloc, Hilaire', 'Bellow, Saul', 'Benchley, Robert', 'Benenson, Peter', 'Ben-Gurion, David', 'Benjamin, Walter', 'Benn, Tony', 'Bennington, Chester', 'Benson, Leana', 'Bent, Silas', 'Bentsen, Lloyd', 'Berger, Ric', 'Bergman, Ingmar', 'Berio, Luciano', 'Berle, Milton', 'Berlin, Irving', 'Berne, Eric', 'Bernhard, Sandra', 'Berra, Yogi', 'Berry, Halle', 'Berry, Wendell', 'Bethea, Erin', 'Bevan, Aneurin', 'Bevel, Ken', 'Biden, Joseph', 'Bierce, Ambrose', 'Biko, Steve', 'Billings, Josh', 'Biondo, Frank', 'Birrell, Augustine', 'Black, Elk', 'Blair, Robert', 'Blair, Tony', 'Blake, William'];
+
+    const peopleLastName = people.map(a=>{
+      return a.slice(0,a.indexOf(","))
+    })
+
+    console.log(peopleLastName)
+
+    const sorted = peopleLastName.sort((a,b)=>{
+      
+      const aup = a.toUpperCase();
+      const bup = b.toUpperCase();
+
+      if (aup<bup){return -1};
+      if (aup>bup){return 1};
+      return 0;
+
+    })
+
+    console.log(sorted)
+
+    /* const sortedByLastName = people.sort((a,b)=>{
+      if ((a.slice(0,a.indexOf(","))) < (b.slice(0,b.indexOf(",")))) return -1;
+      if ((a.slice(0,a.indexOf(","))) > (b.slice(0,b.indexOf(",")))) return 1;
+      return 0;
+    }) */
+
+
+    const sortedByLastName = people.sort((prevName, nextName)=>{
+      const [name1,surname1] = prevName.split(",");
+      const [name2,surname2] = nextName.split(",");
+
+      return name1 > name2 ? 1 : -1;
+
+    })
+    console.table(sortedByLastName)
+
+ 
+   /* ----> ZROBIĆ JESZCZE RAZ PROSTSZĄ METODĄ, KTÓRĄ POKAZYWAŁ WES */
+   
+
+    // 8. Reduce Exerci++
     // Sum up the instances of each of these
-    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck'];
+
+    const numberOfItems = data.reduce((obj,datum)=>{
+      if (!obj[datum]){
+        obj[datum]=0
+      };
+
+      obj[datum]++
+
+      return obj   /* UWAGA: ZWRACAMY ZAWSZE TEN PARAMETR FUNKCJI */
+
+    },{})
+
+    console.log(numberOfItems)
 
   </script>
 </body>
+
 </html>
