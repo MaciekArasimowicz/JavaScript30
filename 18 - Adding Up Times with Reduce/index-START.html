@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Videos</title>
 </head>
+
 <body>
   <ul class="videos">
     <li data-time="5:43">
@@ -177,11 +179,37 @@
     <li data-time="1:56">
       Video 57
     </li>
-    <li data-time="4:04">
+    <li data-time="4:07">
       Video 58
     </li>
   </ul>
-<script>
-</script>
+  <script>
+
+    const times = [...document.querySelectorAll('[data-time]')]
+
+    const test = times.map(time => {
+
+      const [mins, secs] = (time.dataset.time.split(":"))
+
+      return (parseFloat(mins * 60)) + parseFloat(secs)
+
+    })
+      .reduce((a, b) => {
+        return a + b
+      })
+
+    let secondsLeft = test;
+    const hours = Math.floor(secondsLeft / 3600);
+    secondsLeft = secondsLeft % 3600;
+
+    const minutes = Math.floor(secondsLeft / 60);
+    secondsLeft = secondsLeft % 60;
+
+    console.log( `${hours}h ${minutes}min ${secondsLeft}secs`)
+
+
+
+  </script>
 </body>
+
 </html>

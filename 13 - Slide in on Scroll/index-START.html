@@ -43,7 +43,7 @@
   </div>
 
   <script>
-    function debounce(func, wait = 20, immediate = true) {
+    function debounce(func, wait = 40, immediate = true) {
       var timeout;
       return function() {
         var context = this, args = arguments;
@@ -57,6 +57,34 @@
         if (callNow) func.apply(context, args);
       };
     }
+
+    const pictures = document.querySelectorAll('.slide-in')
+
+    function slide(){
+      console.log(window.scrollY)
+      console.log()
+      
+      pictures.forEach(pic=>{
+
+        let winScrollBottom = window.innerHeight + window.scrollY;
+        let picMiddle = pic.offsetTop + pic.height / 2;
+        let notPassedPicture = scrollY < pic.offsetTop + pic.height;
+
+        let isInTheMiddle = winScrollBottom > picMiddle
+
+        if (isInTheMiddle && notPassedPicture){
+          pic.classList.add('active')
+        }else{
+          pic.classList.remove('active')
+        }
+
+      })
+
+    }
+
+    window.addEventListener('scroll',debounce(slide))
+
+  
 
   </script>
 

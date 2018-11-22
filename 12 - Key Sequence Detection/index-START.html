@@ -7,6 +7,23 @@
 </head>
 <body>
 <script>
+
+  let pass = 'kochammaciaka'
+  let array = []
+
+  function konami(e){
+    array.push(e.key)
+    array.splice(0,-pass.length + array.length)
+
+    if (array.join("").includes(pass)){
+      cornify_add();
+    }
+  }
+
+
+  window.addEventListener('keydown',konami);
+
+
 </script>
 </body>
 </html>

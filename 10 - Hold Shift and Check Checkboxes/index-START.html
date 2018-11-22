@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Hold Shift to Check Multiple Checkboxes</title>
 </head>
+
 <body>
   <style>
-
     html {
       font-family: sans-serif;
       background: #ffc600;
@@ -17,7 +18,7 @@
       margin: 50px auto;
       background: white;
       border-radius: 5px;
-      box-shadow: 10px 10px 0 rgba(0,0,0,0.1);
+      box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.1);
     }
 
     .item {
@@ -30,10 +31,10 @@
       border-bottom: 0;
     }
 
-    input:checked + p {
+   /*  input:checked+p {
       background: #F9F9F9;
       text-decoration: line-through;
-    }
+    } */
 
     input[type="checkbox"] {
       margin: 20px;
@@ -44,13 +45,13 @@
       padding: 20px;
       transition: background 0.2s;
       flex: 1;
-      font-family:'helvetica neue';
+      font-family: 'helvetica neue';
       font-size: 20px;
       font-weight: 200;
       border-left: 1px solid #D1E2FF;
     }
   </style>
-   <!--
+  <!--
    The following is a common layout you would see in an email client.
 
    When a user clicks a checkbox, holds Shift, and then clicks another checkbox a few rows down, all the checkboxes inbetween those two checkboxes should be checked.
@@ -95,7 +96,71 @@
     </div>
   </div>
 
-<script>
-</script>
+  <script>
+
+    /* TO DO LIST
+  
+    1. get all the checkboxes
+    2. create listeners on window (keydown -> if shift, then flag is on, keyup -> if shift, then flag is off)
+    3. when we click checkbox and shift is pressed (flag is on), a function starts
+    4. this function checks what was the previously clicked input (array.findIndex)
+    5. function also checks what is the index of a currently clicked item
+    6. functions adds attribute checked:true to all the items inbetween.
+  
+     */
+
+    const checkboxes = document.querySelectorAll(`input[type="checkbox"]`);
+    const checkboxesArray = Array.from(checkboxes);
+    let shiftPressed = false;
+
+    window.addEventListener('keydown', (e) => {
+      if (e.keyCode !== 16) {
+        return
+      } else {
+
+        console.log('KOCHAM MAGDAKA')
+        shiftPressed = true
+      }
+    })
+
+    window.addEventListener('keyup', (e) => {
+      if (e.keyCode !== 16) {
+        return
+      } else {
+        console.log('A NAWET BARDZIEJ!')
+        shiftPressed = false
+      }
+    })
+
+    checkboxes.forEach(e => {
+      e.addEventListener('click', (e) => {
+
+        if (!shiftPressed) return;
+
+        const checkboxes = document.querySelectorAll(`input[type="checkbox"]`);
+
+        const indexOfFirst = checkboxesArray.findIndex(checkbox => {
+          return checkbox.checked && (checkbox != e.target)
+        })
+        const indexOfLast = checkboxesArray.indexOf(e.target);
+
+        checkboxes.forEach((box, i) => {
+          if (indexOfFirst < indexOfLast) {
+            if (i > indexOfFirst && i < indexOfLast) {
+              box.checked = 'true'
+            }
+          } else {
+            if (i < indexOfFirst && i > indexOfLast) {
+              box.checked = 'true'
+            }
+
+          }
+        })
+
+      })
+    })
+
+  </script>
 </body>
+
 </html>

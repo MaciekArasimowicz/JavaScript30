@@ -29,7 +29,7 @@
     
     #bands li {
       border-bottom: 1px solid #efefef;
-      padding: 20px;
+      padding: 10px;
     }
     
     #bands li:last-child {
@@ -47,6 +47,53 @@
 
 <script>
 const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+
+const firstWords = bands.map(a=>{
+  if (
+  a.slice(0,a.indexOf(" ")).includes("An") ||
+  a.slice(0,a.indexOf(" ")).includes("The") ||
+  a.slice(0,a.indexOf(" ")).includes("A")
+  ){
+    return a.slice(a.indexOf(" ")+1)
+  }else{
+    return a
+  }
+})
+
+console.log(firstWords)
+
+const sorted = bands.sort((a,b)=>{
+  if (
+  a.slice(0,a.indexOf(" ")) === "An" ||
+  a.slice(0,a.indexOf(" ")) === "The" ||
+  a.slice(0,a.indexOf(" ")) === "A"
+  ){
+    a = a.slice(a.indexOf(" ")+1)
+  };
+
+  if (
+  b.slice(0,b.indexOf(" ")) === "An" ||
+  b.slice(0,b.indexOf(" ")) === "The" ||
+  b.slice(0,b.indexOf(" ")) === "A"
+  ){
+    b = b.slice(b.indexOf(" ")+1)
+  }
+
+  if (a < b ) return -1;
+  if (a > b ) return 1;
+
+})
+
+const ulbands = document.querySelector('#bands');
+
+const sortedReady = sorted.map(element=>{
+  return `<li>${element}</li>`
+}).join("")
+
+console.log(sortedReady)
+
+ulbands.innerHTML =sortedReady
+
 
 
 </script>
